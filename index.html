@@ -149,7 +149,21 @@ const A = window.APP_DATA;
 function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
   clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),2000); }
 function fmtDate(iso){ const [y,m,d]=iso.split('-'); return `${d}.${m}.${y}`; }
-function copyTxt(el){ const t=el.textContent.trim(); navigator.clipboard&&navigator.clipboard.writeText(t); toast('הועתק ✓'); }
+function copyTxt(el){
+  const t=el.textContent.trim();
+  const done=()=>toast('הקישור הועתק ✓'), fail=()=>toast('לחיצה ארוכה על הקישור כדי להעתיק');
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(done).catch(()=>legacyCopy(t,done,fail));
+  } else legacyCopy(t,done,fail);
+}
+function legacyCopy(t,done,fail){
+  try{
+    const ta=document.createElement('textarea'); ta.value=t; ta.setAttribute('readonly','');
+    ta.style.cssText='position:fixed;top:0;left:0;opacity:0'; document.body.appendChild(ta);
+    ta.focus(); ta.select(); ta.setSelectionRange(0,t.length);
+    const ok=document.execCommand('copy'); document.body.removeChild(ta); ok?done():fail();
+  }catch(e){ fail(); }
+}
 
 /* ============================================================
    סינקלייר (Sinclair) — מחזור 2021–2024
