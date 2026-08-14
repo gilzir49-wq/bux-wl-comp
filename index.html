@@ -112,7 +112,7 @@ window.APP_DATA = {
   timeRange: "10:00–14:00",
   priceILS: 150,
   registrationFormUrl: "https://wkf.ms/4zf0Mhu",   // טופס ההרשמה במאנדיי
-  paymentUrl: "",                                    // קישור תשלום/הרשמה במועדון — יוזן כאן
+  paymentUrl: "https://arbox.link/_y9Q68mJ",         // קישור תשלום (ארבוקס) — בסוף הטופס
   managementBoardUrl: "https://cfbux.monday.com/boards/5102086455"  // בורד הניהול (צוות בלבד)
 };
 </script>
@@ -206,10 +206,6 @@ document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{
    ============================================================ */
 function renderReg(){
   const root=document.getElementById('tab-reg');
-  const pay = A.paymentUrl
-    ? `<a class="btn g big" href="${A.paymentUrl}" target="_blank" rel="noopener">💳 מעבר לתשלום דמי ההשתתפות (${A.priceILS}₪)</a>
-       <p class="muted" style="text-align:center;margin-top:6px">ההרשמה נחשבת סופית רק לאחר התשלום.</p>`
-    : `<div class="note"><b>שימו לב:</b> דמי ההשתתפות (${A.priceILS}₪) ייגבו דרך המועדון. קישור התשלום יתווסף כאן בקרוב.</div>`;
   root.innerHTML=`
   <div class="hero">
     <div class="big">🏋️ תחרות הרמת משקולות</div>
@@ -221,11 +217,11 @@ function renderReg(){
     <h2>📝 איך נרשמים?</h2>
     <ol class="muted" style="padding-inline-start:18px;line-height:2">
       <li>ממלאים את <b>טופס ההרשמה</b> (הכפתור למטה).</li>
-      <li>משלמים את דמי ההשתתפות — <b>${A.priceILS}₪</b> דרך המועדון.</li>
-      <li>ההרשמה סופית רק לאחר התשלום ✅</li>
+      <li>בסוף הטופס משלמים <b>${A.priceILS}₪</b> — מועברים אוטומטית לדף התשלום המאובטח.</li>
+      <li>ההרשמה סופית ומובטחת רק לאחר התשלום ✅</li>
     </ol>
-    <a class="btn big" href="${A.registrationFormUrl}" target="_blank" rel="noopener">📝 למילוי טופס ההרשמה ←</a>
-    ${pay}
+    <a class="btn big" href="${A.registrationFormUrl}" target="_blank" rel="noopener">📝 למילוי טופס ההרשמה ותשלום ←</a>
+    <div class="note"><b>💳 התשלום (${A.priceILS}₪)</b> מתבצע בסוף הטופס — תועברו אוטומטית לדף התשלום.</div>
     <hr>
     <label>קישור ישיר לטופס (להעתקה ושיתוף):</label>
     <code class="copy" onclick="copyTxt(this)">${A.registrationFormUrl}</code>
